@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "185701819717",
+    "firebase_url": "https://saphackproject-default-rtdb.firebaseio.com",
+    "project_id": "saphackproject",
+    "storage_bucket": "saphackproject.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:185701819717:android:b8ccca4b9a63034d278a2c",
+        "android_client_info": {
+          "package_name": "com.mycompany.crmapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "185701819717-pch1m5n7otj7iu4g11rrq6lr9koa8mdo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDNCWfXp7pS1QdLCVZhvWg13tJJNWKB1LI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "185701819717-pch1m5n7otj7iu4g11rrq6lr9koa8mdo.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "185701819717-dpl8i4njj5m4oop1hgnpmui78obo0b00.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.mycompany.crmapp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
