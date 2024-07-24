@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 import '/backend/backend.dart';
+import '/backend/schema/structs/index.dart';
 
 import '/auth/base_auth_user_provider.dart';
 
@@ -111,13 +112,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
                   : MainHomeWidget(),
             ),
             FFRoute(
-              name: 'Main_customerList',
-              path: 'mainCustomerList',
-              builder: (context, params) => params.isEmpty
-                  ? NavBarPage(initialPage: 'Main_customerList')
-                  : MainCustomerListWidget(),
-            ),
-            FFRoute(
               name: 'Main_Contracts',
               path: 'mainContracts',
               builder: (context, params) => params.isEmpty
@@ -161,7 +155,16 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
             FFRoute(
               name: 'projectDetails',
               path: 'projectDetails',
-              builder: (context, params) => ProjectDetailsWidget(),
+              asyncParams: {
+                'activityChosenPage':
+                    getDoc(['activities'], ActivitiesRecord.fromSnapshot),
+              },
+              builder: (context, params) => ProjectDetailsWidget(
+                activityChosenPage: params.getParam(
+                  'activityChosenPage',
+                  ParamType.Document,
+                ),
+              ),
             ),
             FFRoute(
               name: 'searchPage',
@@ -171,14 +174,21 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
             FFRoute(
               name: 'messagesDetails',
               path: 'messagesDetails',
-              builder: (context, params) => MessagesDetailsWidget(),
+              builder: (context, params) => params.isEmpty
+                  ? NavBarPage(initialPage: 'messagesDetails')
+                  : MessagesDetailsWidget(),
             ),
             FFRoute(
               name: 'Main_ContractsCopy',
-              path: 'mainContractsCopy',
+              path: 'Main_ContractsCopy',
+              builder: (context, params) => MainContractsCopyWidget(),
+            ),
+            FFRoute(
+              name: 'Main_Reports',
+              path: 'mainReports',
               builder: (context, params) => params.isEmpty
-                  ? NavBarPage(initialPage: 'Main_ContractsCopy')
-                  : MainContractsCopyWidget(),
+                  ? NavBarPage(initialPage: 'Main_Reports')
+                  : MainReportsWidget(),
             )
           ].map((r) => r.toRoute(appStateNotifier)).toList(),
         ),
@@ -300,6 +310,7 @@ class FFParameters {
     ParamType type, {
     bool isList = false,
     List<String>? collectionNamePath,
+    StructBuilder<T>? structBuilder,
   }) {
     if (futureParamValues.containsKey(paramName)) {
       return futureParamValues[paramName];
@@ -318,6 +329,7 @@ class FFParameters {
       type,
       isList,
       collectionNamePath: collectionNamePath,
+      structBuilder: structBuilder,
     );
   }
 }
@@ -365,11 +377,14 @@ class FFRoute {
                 )
               : builder(context, ffParams);
           final child = appStateNotifier.loading
-              ? Container(
-                  color: FlutterFlowTheme.of(context).primary,
-                  child: Image.asset(
-                    'assets/images/splash_app_CRM_alt@2x.png',
-                    fit: BoxFit.fitHeight,
+              ? Center(
+                  child: SizedBox(
+                    width: 50.0,
+                    height: 50.0,
+                    child: SpinKitWanderingCubes(
+                      color: FlutterFlowTheme.of(context).primary,
+                      size: 50.0,
+                    ),
                   ),
                 )
               : page;

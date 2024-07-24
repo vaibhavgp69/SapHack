@@ -1,3 +1,5 @@
+import '/auth/firebase_auth/auth_util.dart';
+import '/backend/backend.dart';
 import '/components/modal_sections/modal_project_details/modal_project_details_widget.dart';
 import '/components/modals/command_palette/command_palette_widget.dart';
 import '/components/web_nav/web_nav_widget.dart';

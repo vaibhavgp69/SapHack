@@ -159,6 +159,7 @@ class _CommandPaletteWidgetState extends State<CommandPaletteWidget>
                     borderRadius: BorderRadius.circular(16.0),
                   ),
                   child: SingleChildScrollView(
+                    primary: false,
                     child: Column(
                       mainAxisSize: MainAxisSize.max,
                       crossAxisAlignment: CrossAxisAlignment.start,

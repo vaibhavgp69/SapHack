@@ -1,5 +1,5 @@
 import '/auth/firebase_auth/auth_util.dart';
-import '/components/main_logo_small/main_logo_small_widget.dart';
+import '/components/logo_small_widget.dart';
 import '/components/modals/command_palette/command_palette_widget.dart';
 import '/flutter_flow/flutter_flow_language_selector.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -80,12 +80,12 @@ class _WebNavWidgetState extends State<WebNavWidget> {
                 padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 16.0),
                 child: Row(
                   mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     wrapWithModel(
-                      model: _model.mainLogoSmallModel,
+                      model: _model.logoSmallModel,
                       updateCallback: () => setState(() {}),
-                      child: MainLogoSmallWidget(),
+                      child: LogoSmallWidget(),
                     ),
                   ],
                 ),
@@ -229,7 +229,7 @@ class _WebNavWidgetState extends State<WebNavWidget> {
                     logFirebaseEvent('WEB_NAV_COMP_bg_color_ON_TAP');
 
                     context.pushNamed(
-                      'Main_customerList',
+                      'Main_Contracts',
                       extra: <String, dynamic>{
                         kTransitionInfoKey: TransitionInfo(
                           hasTransition: true,
@@ -242,7 +242,7 @@ class _WebNavWidgetState extends State<WebNavWidget> {
                   child: Container(
                     width: double.infinity,
                     decoration: BoxDecoration(
-                      color: widget!.selectedNav == 2
+                      color: widget!.selectedNav == 3
                           ? FlutterFlowTheme.of(context).alternate
                           : FlutterFlowTheme.of(context).secondaryBackground,
                       borderRadius: BorderRadius.circular(8.0),
@@ -254,8 +254,8 @@ class _WebNavWidgetState extends State<WebNavWidget> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Icon(
-                            Icons.business_rounded,
-                            color: widget!.selectedNav == 2
+                            Icons.document_scanner_rounded,
+                            color: widget!.selectedNav == 3
                                 ? FlutterFlowTheme.of(context).primary
                                 : FlutterFlowTheme.of(context).secondaryText,
                             size: 28.0,
@@ -265,13 +265,13 @@ class _WebNavWidgetState extends State<WebNavWidget> {
                                 12.0, 0.0, 0.0, 0.0),
                             child: Text(
                               FFLocalizations.of(context).getText(
-                                'lbojdpxg' /* Customers */,
+                                '9pjba90p' /* Activites */,
                               ),
                               style: FlutterFlowTheme.of(context)
                                   .labelLarge
                                   .override(
                                     fontFamily: 'Plus Jakarta Sans',
-                                    color: widget!.selectedNav == 2
+                                    color: widget!.selectedNav == 3
                                         ? FlutterFlowTheme.of(context)
                                             .primaryText
                                         : FlutterFlowTheme.of(context)
@@ -322,7 +322,7 @@ class _WebNavWidgetState extends State<WebNavWidget> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Icon(
-                            Icons.document_scanner_rounded,
+                            Icons.insert_page_break,
                             color: widget!.selectedNav == 3
                                 ? FlutterFlowTheme.of(context).primary
                                 : FlutterFlowTheme.of(context).secondaryText,
@@ -333,7 +333,7 @@ class _WebNavWidgetState extends State<WebNavWidget> {
                                 12.0, 0.0, 0.0, 0.0),
                             child: Text(
                               FFLocalizations.of(context).getText(
-                                '9pjba90p' /* Contracts */,
+                                'uv48g9ky' /* Reports */,
                               ),
                               style: FlutterFlowTheme.of(context)
                                   .labelLarge

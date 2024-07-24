@@ -12,6 +12,7 @@ import 'flutter_flow/flutter_flow_theme.dart';
 import 'flutter_flow/flutter_flow_util.dart';
 import 'flutter_flow/internationalization.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'flutter_flow/nav/nav.dart';
 import 'index.dart';
@@ -142,121 +143,110 @@ class _NavBarPageState extends State<NavBarPage> {
   Widget build(BuildContext context) {
     final tabs = {
       'Main_Home': MainHomeWidget(),
-      'Main_customerList': MainCustomerListWidget(),
       'Main_Contracts': MainContractsWidget(),
+      'Main_Reports': MainReportsWidget(),
       'Main_messages': MainMessagesWidget(),
       'Main_profilePage': MainProfilePageWidget(),
-      'Main_ContractsCopy': MainContractsCopyWidget(),
+      'messagesDetails': MessagesDetailsWidget(),
     };
     final currentIndex = tabs.keys.toList().indexOf(_currentPageName);
 
     return Scaffold(
       body: _currentPage ?? tabs[_currentPageName],
-      bottomNavigationBar: Visibility(
-        visible: responsiveVisibility(
-          context: context,
-          tabletLandscape: false,
-          desktop: false,
-        ),
-        child: BottomNavigationBar(
-          currentIndex: currentIndex,
-          onTap: (i) => setState(() {
-            _currentPage = null;
-            _currentPageName = tabs.keys.toList()[i];
-          }),
-          backgroundColor: FlutterFlowTheme.of(context).secondaryBackground,
-          selectedItemColor: FlutterFlowTheme.of(context).primary,
-          unselectedItemColor: FlutterFlowTheme.of(context).secondaryText,
-          showSelectedLabels: true,
-          showUnselectedLabels: false,
-          type: BottomNavigationBarType.fixed,
-          items: <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-              icon: Icon(
-                Icons.dashboard_outlined,
-                size: 24.0,
-              ),
-              activeIcon: Icon(
-                Icons.dashboard_rounded,
-                size: 32.0,
-              ),
-              label: FFLocalizations.of(context).getText(
-                'xdxbdj20' /* __ */,
-              ),
-              tooltip: '',
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: currentIndex,
+        onTap: (i) => setState(() {
+          _currentPage = null;
+          _currentPageName = tabs.keys.toList()[i];
+        }),
+        backgroundColor: FlutterFlowTheme.of(context).secondaryBackground,
+        selectedItemColor: FlutterFlowTheme.of(context).primary,
+        unselectedItemColor: FlutterFlowTheme.of(context).secondaryText,
+        showSelectedLabels: true,
+        showUnselectedLabels: false,
+        type: BottomNavigationBarType.fixed,
+        items: <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.dashboard_outlined,
+              size: 24.0,
             ),
-            BottomNavigationBarItem(
-              icon: Icon(
-                Icons.supervised_user_circle_outlined,
-                size: 24.0,
-              ),
-              activeIcon: Icon(
-                Icons.supervised_user_circle_sharp,
-                size: 32.0,
-              ),
-              label: FFLocalizations.of(context).getText(
-                '3ourv2w9' /* __ */,
-              ),
-              tooltip: '',
+            activeIcon: Icon(
+              Icons.dashboard_rounded,
+              size: 32.0,
             ),
-            BottomNavigationBarItem(
-              icon: Icon(
-                Icons.home_work_outlined,
-                size: 24.0,
-              ),
-              activeIcon: Icon(
-                Icons.home_work_rounded,
-                size: 32.0,
-              ),
-              label: FFLocalizations.of(context).getText(
-                'j08eiorc' /* __ */,
-              ),
-              tooltip: '',
+            label: FFLocalizations.of(context).getText(
+              'xdxbdj20' /* __ */,
             ),
-            BottomNavigationBarItem(
-              icon: Icon(
-                Icons.forum_outlined,
-                size: 24.0,
-              ),
-              activeIcon: Icon(
-                Icons.forum_rounded,
-                size: 24.0,
-              ),
-              label: FFLocalizations.of(context).getText(
-                'smtxdnbn' /* __ */,
-              ),
-              tooltip: '',
+            tooltip: '',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.home_work_outlined,
+              size: 24.0,
             ),
-            BottomNavigationBarItem(
-              icon: Icon(
-                Icons.account_circle_outlined,
-                size: 24.0,
-              ),
-              activeIcon: Icon(
-                Icons.account_circle,
-                size: 32.0,
-              ),
-              label: FFLocalizations.of(context).getText(
-                'o3dp9tss' /* __ */,
-              ),
-              tooltip: '',
+            activeIcon: Icon(
+              Icons.home_work_rounded,
+              size: 32.0,
             ),
-            BottomNavigationBarItem(
-              icon: Icon(
-                Icons.home_work_outlined,
-                size: 24.0,
-              ),
-              activeIcon: Icon(
-                Icons.home_work_rounded,
-                size: 32.0,
-              ),
-              label: FFLocalizations.of(context).getText(
-                '8jwcnpen' /* __ */,
-              ),
-              tooltip: '',
-            )
-          ],
-        ),
+            label: FFLocalizations.of(context).getText(
+              'j08eiorc' /* __ */,
+            ),
+            tooltip: '',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.insert_page_break,
+              size: 24.0,
+            ),
+            activeIcon: Icon(
+              Icons.insert_page_break,
+              size: 32.0,
+            ),
+            label: FFLocalizations.of(context).getText(
+              'r52uu643' /* ___ */,
+            ),
+            tooltip: '',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.forum_outlined,
+              size: 24.0,
+            ),
+            activeIcon: Icon(
+              Icons.forum_rounded,
+              size: 24.0,
+            ),
+            label: FFLocalizations.of(context).getText(
+              'smtxdnbn' /* __ */,
+            ),
+            tooltip: '',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.account_circle_outlined,
+              size: 24.0,
+            ),
+            activeIcon: Icon(
+              Icons.account_circle,
+              size: 32.0,
+            ),
+            label: FFLocalizations.of(context).getText(
+              'o3dp9tss' /* __ */,
+            ),
+            tooltip: '',
+          ),
+          BottomNavigationBarItem(
+            icon: FaIcon(
+              FontAwesomeIcons.android,
+              size: 24.0,
+            ),
+            label: FFLocalizations.of(context).getText(
+              'pjym5jdv' /* Ai chat */,
+            ),
+            tooltip: '',
+          )
+        ],
       ),
     );
   }

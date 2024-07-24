@@ -1,3 +1,4 @@
+import '/backend/backend.dart';
 import '/components/modal_sections/project_details_alt/project_details_alt_widget.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
@@ -14,7 +15,12 @@ import 'modal_project_details_model.dart';
 export 'modal_project_details_model.dart';
 
 class ModalProjectDetailsWidget extends StatefulWidget {
-  const ModalProjectDetailsWidget({super.key});
+  const ModalProjectDetailsWidget({
+    super.key,
+    required this.activityChosen,
+  });
+
+  final ActivitiesRecord? activityChosen;
 
   @override
   State<ModalProjectDetailsWidget> createState() =>
@@ -188,7 +194,9 @@ class _ModalProjectDetailsWidgetState extends State<ModalProjectDetailsWidget>
                   child: wrapWithModel(
                     model: _model.projectDetailsAltModel,
                     updateCallback: () => setState(() {}),
-                    child: ProjectDetailsAltWidget(),
+                    child: ProjectDetailsAltWidget(
+                      activityChosen: widget!.activityChosen!,
+                    ),
                   ),
                 ),
               ),

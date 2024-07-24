@@ -255,26 +255,38 @@ class _MainContractsCopyWidgetState extends State<MainContractsCopyWidget>
                               ),
                               child: FlutterFlowDropDown<String>(
                                 controller: _model.dropDownValueController ??=
-                                    FormFieldController<String>(null),
+                                    FormFieldController<String>(
+                                  _model.dropDownValue ??=
+                                      FFLocalizations.of(context).getText(
+                                    'dtk920p2' /* Tree Plantation */,
+                                  ),
+                                ),
                                 options: [
                                   FFLocalizations.of(context).getText(
                                     'zbsj365v' /* Tree Plantation */,
                                   ),
                                   FFLocalizations.of(context).getText(
-                                    'v5s3wn4g' /* Water Managemen */,
+                                    'v5s3wn4g' /* Water Management */,
                                   ),
                                   FFLocalizations.of(context).getText(
                                     'ucxtcf4t' /* Sustainable Agriculture */,
                                   ),
                                   FFLocalizations.of(context).getText(
-                                    'pjz17m52' /* Air Pollution Reduction */,
+                                    '41de7jfq' /* Air Pollution Reduction */,
                                   ),
                                   FFLocalizations.of(context).getText(
-                                    'ciltsjgl' /* Conservation and Restoration */,
+                                    'mr0cvetu' /* Conservation and Restoration */,
                                   )
                                 ],
-                                onChanged: (val) =>
-                                    setState(() => _model.dropDownValue = val),
+                                onChanged: (val) async {
+                                  setState(() => _model.dropDownValue = val);
+                                  logFirebaseEvent(
+                                      'MAIN_CONTRACTS_COPY_DropDown_xmx9z357_ON');
+                                  setState(() {
+                                    _model.dropDownValueController?.value =
+                                        _model.dropDownValue!;
+                                  });
+                                },
                                 width: 239.0,
                                 height: 1.0,
                                 textStyle: FlutterFlowTheme.of(context)
@@ -315,7 +327,9 @@ class _MainContractsCopyWidgetState extends State<MainContractsCopyWidget>
                               child: wrapWithModel(
                                 model: _model.projectDetailsAltCopyModel,
                                 updateCallback: () => setState(() {}),
-                                child: ProjectDetailsAltCopyWidget(),
+                                child: ProjectDetailsAltCopyWidget(
+                                  dropdownValue: _model.dropDownValue!,
+                                ),
                               ),
                             ),
                           ),

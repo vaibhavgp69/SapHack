@@ -7,7 +7,9 @@ import 'schema/util/firestore_util.dart';
 
 import 'schema/users_record.dart';
 import 'schema/videos_record.dart';
-import 'schema/questions_record.dart';
+import 'schema/activities_record.dart';
+import 'schema/images_record.dart';
+import 'schema/reports_record.dart';
 
 export 'dart:async' show StreamSubscription;
 export 'package:cloud_firestore/cloud_firestore.dart' hide Order;
@@ -18,7 +20,9 @@ export 'schema/util/schema_util.dart';
 
 export 'schema/users_record.dart';
 export 'schema/videos_record.dart';
-export 'schema/questions_record.dart';
+export 'schema/activities_record.dart';
+export 'schema/images_record.dart';
+export 'schema/reports_record.dart';
 
 /// Functions to query UsersRecords (as a Stream and as a Future).
 Future<int> queryUsersRecordCount({
@@ -94,38 +98,112 @@ Future<List<VideosRecord>> queryVideosRecordOnce({
       singleRecord: singleRecord,
     );
 
-/// Functions to query QuestionsRecords (as a Stream and as a Future).
-Future<int> queryQuestionsRecordCount({
+/// Functions to query ActivitiesRecords (as a Stream and as a Future).
+Future<int> queryActivitiesRecordCount({
   Query Function(Query)? queryBuilder,
   int limit = -1,
 }) =>
     queryCollectionCount(
-      QuestionsRecord.collection,
+      ActivitiesRecord.collection,
       queryBuilder: queryBuilder,
       limit: limit,
     );
 
-Stream<List<QuestionsRecord>> queryQuestionsRecord({
+Stream<List<ActivitiesRecord>> queryActivitiesRecord({
   Query Function(Query)? queryBuilder,
   int limit = -1,
   bool singleRecord = false,
 }) =>
     queryCollection(
-      QuestionsRecord.collection,
-      QuestionsRecord.fromSnapshot,
+      ActivitiesRecord.collection,
+      ActivitiesRecord.fromSnapshot,
       queryBuilder: queryBuilder,
       limit: limit,
       singleRecord: singleRecord,
     );
 
-Future<List<QuestionsRecord>> queryQuestionsRecordOnce({
+Future<List<ActivitiesRecord>> queryActivitiesRecordOnce({
   Query Function(Query)? queryBuilder,
   int limit = -1,
   bool singleRecord = false,
 }) =>
     queryCollectionOnce(
-      QuestionsRecord.collection,
-      QuestionsRecord.fromSnapshot,
+      ActivitiesRecord.collection,
+      ActivitiesRecord.fromSnapshot,
+      queryBuilder: queryBuilder,
+      limit: limit,
+      singleRecord: singleRecord,
+    );
+
+/// Functions to query ImagesRecords (as a Stream and as a Future).
+Future<int> queryImagesRecordCount({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+}) =>
+    queryCollectionCount(
+      ImagesRecord.collection,
+      queryBuilder: queryBuilder,
+      limit: limit,
+    );
+
+Stream<List<ImagesRecord>> queryImagesRecord({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+  bool singleRecord = false,
+}) =>
+    queryCollection(
+      ImagesRecord.collection,
+      ImagesRecord.fromSnapshot,
+      queryBuilder: queryBuilder,
+      limit: limit,
+      singleRecord: singleRecord,
+    );
+
+Future<List<ImagesRecord>> queryImagesRecordOnce({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+  bool singleRecord = false,
+}) =>
+    queryCollectionOnce(
+      ImagesRecord.collection,
+      ImagesRecord.fromSnapshot,
+      queryBuilder: queryBuilder,
+      limit: limit,
+      singleRecord: singleRecord,
+    );
+
+/// Functions to query ReportsRecords (as a Stream and as a Future).
+Future<int> queryReportsRecordCount({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+}) =>
+    queryCollectionCount(
+      ReportsRecord.collection,
+      queryBuilder: queryBuilder,
+      limit: limit,
+    );
+
+Stream<List<ReportsRecord>> queryReportsRecord({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+  bool singleRecord = false,
+}) =>
+    queryCollection(
+      ReportsRecord.collection,
+      ReportsRecord.fromSnapshot,
+      queryBuilder: queryBuilder,
+      limit: limit,
+      singleRecord: singleRecord,
+    );
+
+Future<List<ReportsRecord>> queryReportsRecordOnce({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+  bool singleRecord = false,
+}) =>
+    queryCollectionOnce(
+      ReportsRecord.collection,
+      ReportsRecord.fromSnapshot,
       queryBuilder: queryBuilder,
       limit: limit,
       singleRecord: singleRecord,

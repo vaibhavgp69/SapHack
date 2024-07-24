@@ -1,3 +1,5 @@
+import '/auth/firebase_auth/auth_util.dart';
+import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_button_tabbar.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
@@ -16,7 +18,12 @@ import 'project_details_alt_model.dart';
 export 'project_details_alt_model.dart';
 
 class ProjectDetailsAltWidget extends StatefulWidget {
-  const ProjectDetailsAltWidget({super.key});
+  const ProjectDetailsAltWidget({
+    super.key,
+    required this.activityChosen,
+  });
+
+  final ActivitiesRecord? activityChosen;
 
   @override
   State<ProjectDetailsAltWidget> createState() =>
@@ -42,7 +49,7 @@ class _ProjectDetailsAltWidgetState extends State<ProjectDetailsAltWidget>
 
     _model.tabBarController = TabController(
       vsync: this,
-      length: 3,
+      length: 2,
       initialIndex: 0,
     )..addListener(() => setState(() {}));
     animationsMap.addAll({
@@ -288,8 +295,9 @@ class _ProjectDetailsAltWidgetState extends State<ProjectDetailsAltWidget>
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              FFLocalizations.of(context).getText(
-                                'zgyw4s95' /* ACME Co. */,
+                              valueOrDefault<String>(
+                                widget!.activityChosen?.activityType,
+                                'Tree Plantation',
                               ),
                               style: FlutterFlowTheme.of(context)
                                   .headlineSmall
@@ -303,8 +311,9 @@ class _ProjectDetailsAltWidgetState extends State<ProjectDetailsAltWidget>
                               padding: EdgeInsetsDirectional.fromSTEB(
                                   0.0, 4.0, 0.0, 0.0),
                               child: Text(
-                                FFLocalizations.of(context).getText(
-                                  'izuvtgws' /* Contracts for New Opportunitie... */,
+                                valueOrDefault<String>(
+                                  widget!.activityChosen?.activityDesc,
+                                  'Description here',
                                 ),
                                 style: FlutterFlowTheme.of(context)
                                     .labelLarge
@@ -382,13 +391,15 @@ class _ProjectDetailsAltWidgetState extends State<ProjectDetailsAltWidget>
                             ),
                             child: Padding(
                               padding: EdgeInsets.all(2.0),
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(10.0),
-                                child: Image.network(
-                                  'https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8dXNlcnxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=900&q=60',
-                                  width: 60.0,
-                                  height: 60.0,
-                                  fit: BoxFit.cover,
+                              child: AuthUserStreamWidget(
+                                builder: (context) => ClipRRect(
+                                  borderRadius: BorderRadius.circular(10.0),
+                                  child: Image.network(
+                                    currentUserPhoto,
+                                    width: 60.0,
+                                    height: 60.0,
+                                    fit: BoxFit.cover,
+                                  ),
                                 ),
                               ),
                             ),
@@ -401,25 +412,23 @@ class _ProjectDetailsAltWidgetState extends State<ProjectDetailsAltWidget>
                                 Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
                                       12.0, 0.0, 0.0, 0.0),
-                                  child: Text(
-                                    FFLocalizations.of(context).getText(
-                                      'obbewkqp' /* Randy Rudolph */,
+                                  child: AuthUserStreamWidget(
+                                    builder: (context) => Text(
+                                      currentUserDisplayName,
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyLarge
+                                          .override(
+                                            fontFamily: 'Plus Jakarta Sans',
+                                            letterSpacing: 0.0,
+                                          ),
                                     ),
-                                    style: FlutterFlowTheme.of(context)
-                                        .bodyLarge
-                                        .override(
-                                          fontFamily: 'Plus Jakarta Sans',
-                                          letterSpacing: 0.0,
-                                        ),
                                   ),
                                 ),
                                 Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
                                       12.0, 4.0, 0.0, 0.0),
                                   child: Text(
-                                    FFLocalizations.of(context).getText(
-                                      'ae8di6vv' /* name@domain.com */,
-                                    ),
+                                    currentUserEmail,
                                     style: FlutterFlowTheme.of(context)
                                         .labelMedium
                                         .override(
@@ -466,7 +475,7 @@ class _ProjectDetailsAltWidgetState extends State<ProjectDetailsAltWidget>
                   children: [
                     Text(
                       FFLocalizations.of(context).getText(
-                        'x6aorxwd' /* Next Action */,
+                        'x6aorxwd' /* Conducted On */,
                       ),
                       style: FlutterFlowTheme.of(context).bodyMedium.override(
                             fontFamily: 'Plus Jakarta Sans',
@@ -478,8 +487,9 @@ class _ProjectDetailsAltWidgetState extends State<ProjectDetailsAltWidget>
                         padding:
                             EdgeInsetsDirectional.fromSTEB(4.0, 0.0, 0.0, 0.0),
                         child: Text(
-                          FFLocalizations.of(context).getText(
-                            '8sktau69' /* Tuesday, 10:00am */,
+                          valueOrDefault<String>(
+                            widget!.activityChosen?.conductedOn,
+                            '12th June, 2024',
                           ),
                           style:
                               FlutterFlowTheme.of(context).bodyMedium.override(
@@ -506,7 +516,7 @@ class _ProjectDetailsAltWidgetState extends State<ProjectDetailsAltWidget>
                             16.0, 0.0, 16.0, 0.0),
                         child: Text(
                           FFLocalizations.of(context).getText(
-                            'ck1j2u5s' /* In Progress */,
+                            'ck1j2u5s' /* Activity Verified */,
                           ),
                           style:
                               FlutterFlowTheme.of(context).bodyMedium.override(
@@ -563,15 +573,10 @@ class _ProjectDetailsAltWidgetState extends State<ProjectDetailsAltWidget>
                         'n251rti5' /* Contracts */,
                       ),
                     ),
-                    Tab(
-                      text: FFLocalizations.of(context).getText(
-                        'x8yfre0t' /* Project Details */,
-                      ),
-                    ),
                   ],
                   controller: _model.tabBarController,
                   onTap: (i) async {
-                    [() async {}, () async {}, () async {}][i]();
+                    [() async {}, () async {}][i]();
                   },
                 ),
               ),
@@ -646,7 +651,7 @@ class _ProjectDetailsAltWidgetState extends State<ProjectDetailsAltWidget>
                                                   text: FFLocalizations.of(
                                                           context)
                                                       .getText(
-                                                    '4fs4d1ar' /* FlutterFlow CRM App: */,
+                                                    '4fs4d1ar' /* Eco Smart :  */,
                                                   ),
                                                   style: FlutterFlowTheme.of(
                                                           context)
@@ -667,7 +672,7 @@ class _ProjectDetailsAltWidgetState extends State<ProjectDetailsAltWidget>
                                                   text: FFLocalizations.of(
                                                           context)
                                                       .getText(
-                                                    'n5ub587t' /*  Begin Work */,
+                                                    'n5ub587t' /* Generated Activity Description */,
                                                   ),
                                                   style: TextStyle(),
                                                 )
@@ -706,34 +711,15 @@ class _ProjectDetailsAltWidgetState extends State<ProjectDetailsAltWidget>
                                               crossAxisAlignment:
                                                   CrossAxisAlignment.start,
                                               children: [
-                                                Text(
-                                                  FFLocalizations.of(context)
-                                                      .getText(
-                                                    'y2yi7ro1' /* SOW Change Order */,
-                                                  ),
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .labelSmall
-                                                      .override(
-                                                        fontFamily:
-                                                            'Plus Jakarta Sans',
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .primary,
-                                                        letterSpacing: 0.0,
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                      ),
-                                                ),
                                                 Padding(
                                                   padding: EdgeInsetsDirectional
                                                       .fromSTEB(
                                                           0.0, 4.0, 0.0, 0.0),
                                                   child: Text(
-                                                    FFLocalizations.of(context)
-                                                        .getText(
-                                                      'tyo3th3g' /* FlutterFlow CRM App */,
+                                                    valueOrDefault<String>(
+                                                      widget!.activityChosen
+                                                          ?.genDesc,
+                                                      'generated description',
                                                     ),
                                                     style: FlutterFlowTheme.of(
                                                             context)
@@ -774,368 +760,73 @@ class _ProjectDetailsAltWidgetState extends State<ProjectDetailsAltWidget>
                             ),
                           ),
                         ),
-                        Container(
-                          width: 100.0,
-                          decoration: BoxDecoration(
-                            color: FlutterFlowTheme.of(context)
-                                .secondaryBackground,
-                          ),
-                          child: Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                16.0, 12.0, 16.0, 12.0),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.max,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Align(
-                                  alignment: AlignmentDirectional(-1.0, -1.0),
-                                  child: AnimatedContainer(
-                                    duration: Duration(milliseconds: 150),
-                                    curve: Curves.easeInOut,
-                                    width: 36.0,
-                                    height: 36.0,
-                                    decoration: BoxDecoration(
-                                      color:
-                                          FlutterFlowTheme.of(context).accent1,
-                                      shape: BoxShape.circle,
-                                      border: Border.all(
-                                        color: FlutterFlowTheme.of(context)
-                                            .primary,
-                                        width: 2.0,
-                                      ),
-                                    ),
-                                    child: Padding(
-                                      padding: EdgeInsets.all(2.0),
-                                      child: Icon(
-                                        Icons.document_scanner_rounded,
-                                        color: FlutterFlowTheme.of(context)
-                                            .primary,
-                                        size: 20.0,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                Flexible(
-                                  child: Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        16.0, 0.0, 0.0, 0.0),
-                                    child: Column(
-                                      mainAxisSize: MainAxisSize.max,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  0.0, 0.0, 0.0, 12.0),
-                                          child: RichText(
-                                            textScaler: MediaQuery.of(context)
-                                                .textScaler,
-                                            text: TextSpan(
-                                              children: [
-                                                TextSpan(
-                                                  text: FFLocalizations.of(
-                                                          context)
-                                                      .getText(
-                                                    'fjdirac9' /* Jeremiah Goldsten  */,
-                                                  ),
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .bodyLarge
-                                                      .override(
-                                                        fontFamily:
-                                                            'Plus Jakarta Sans',
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .primary,
-                                                        letterSpacing: 0.0,
-                                                        fontWeight:
-                                                            FontWeight.w600,
-                                                      ),
-                                                ),
-                                                TextSpan(
-                                                  text: FFLocalizations.of(
-                                                          context)
-                                                      .getText(
-                                                    'g9h5nanl' /* accepted a request */,
-                                                  ),
-                                                  style: TextStyle(),
-                                                )
-                                              ],
-                                              style:
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodyLarge
-                                                      .override(
-                                                        fontFamily:
-                                                            'Plus Jakarta Sans',
-                                                        letterSpacing: 0.0,
-                                                      ),
-                                            ),
-                                          ),
-                                        ),
-                                        Container(
-                                          width: double.infinity,
-                                          decoration: BoxDecoration(
-                                            color: FlutterFlowTheme.of(context)
-                                                .primaryBackground,
-                                            borderRadius:
-                                                BorderRadius.circular(12.0),
-                                          ),
-                                          child: Padding(
-                                            padding: EdgeInsets.all(12.0),
-                                            child: Column(
-                                              mainAxisSize: MainAxisSize.max,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Text(
-                                                  FFLocalizations.of(context)
-                                                      .getText(
-                                                    'ndvrf4a3' /* SOW Change Order */,
-                                                  ),
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .labelSmall
-                                                      .override(
-                                                        fontFamily:
-                                                            'Plus Jakarta Sans',
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .primary,
-                                                        letterSpacing: 0.0,
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                      ),
-                                                ),
-                                                Padding(
-                                                  padding: EdgeInsetsDirectional
-                                                      .fromSTEB(
-                                                          0.0, 4.0, 0.0, 0.0),
-                                                  child: Text(
-                                                    FFLocalizations.of(context)
-                                                        .getText(
-                                                      'ruswj67g' /* FlutterFlow CRM App */,
-                                                    ),
-                                                    style: FlutterFlowTheme.of(
-                                                            context)
-                                                        .bodyLarge
-                                                        .override(
-                                                          fontFamily:
-                                                              'Plus Jakarta Sans',
-                                                          letterSpacing: 0.0,
-                                                        ),
-                                                  ),
-                                                ),
-                                                Padding(
-                                                  padding: EdgeInsetsDirectional
-                                                      .fromSTEB(
-                                                          0.0, 8.0, 0.0, 0.0),
-                                                  child: Text(
-                                                    FFLocalizations.of(context)
-                                                        .getText(
-                                                      'cgdoty6v' /* "Notifications and reminders i... */,
-                                                    ),
-                                                    style: FlutterFlowTheme.of(
-                                                            context)
-                                                        .labelMedium
-                                                        .override(
-                                                          fontFamily:
-                                                              'Plus Jakarta Sans',
-                                                          letterSpacing: 0.0,
-                                                        ),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  0.0, 4.0, 0.0, 0.0),
-                                          child: Text(
-                                            FFLocalizations.of(context).getText(
-                                              'z3xab243' /* Jul 8, at 4:30pm */,
-                                            ),
-                                            style: FlutterFlowTheme.of(context)
-                                                .labelMedium
-                                                .override(
-                                                  fontFamily:
-                                                      'Plus Jakarta Sans',
-                                                  letterSpacing: 0.0,
-                                                ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ],
+                        Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              0.0, 10.0, 0.0, 0.0),
+                          child: Container(
+                            width: 100.0,
+                            decoration: BoxDecoration(
+                              color: FlutterFlowTheme.of(context)
+                                  .secondaryBackground,
                             ),
-                          ),
-                        ),
-                        Container(
-                          width: 100.0,
-                          decoration: BoxDecoration(
-                            color: FlutterFlowTheme.of(context)
-                                .secondaryBackground,
-                          ),
-                          child: Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                16.0, 12.0, 16.0, 12.0),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.max,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Align(
-                                  alignment: AlignmentDirectional(-1.0, -1.0),
-                                  child: AnimatedContainer(
-                                    duration: Duration(milliseconds: 150),
-                                    curve: Curves.easeInOut,
-                                    width: 36.0,
-                                    height: 36.0,
-                                    decoration: BoxDecoration(
-                                      color:
-                                          FlutterFlowTheme.of(context).accent2,
-                                      shape: BoxShape.circle,
-                                      border: Border.all(
+                            child: Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  16.0, 12.0, 16.0, 12.0),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.max,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Align(
+                                    alignment: AlignmentDirectional(-1.0, -1.0),
+                                    child: AnimatedContainer(
+                                      duration: Duration(milliseconds: 150),
+                                      curve: Curves.easeInOut,
+                                      width: 36.0,
+                                      height: 36.0,
+                                      decoration: BoxDecoration(
                                         color: FlutterFlowTheme.of(context)
-                                            .secondary,
-                                        width: 2.0,
+                                            .accent2,
+                                        shape: BoxShape.circle,
+                                        border: Border.all(
+                                          color: FlutterFlowTheme.of(context)
+                                              .secondary,
+                                          width: 2.0,
+                                        ),
                                       ),
-                                    ),
-                                    child: Padding(
-                                      padding: EdgeInsets.all(2.0),
-                                      child: Icon(
-                                        Icons.roundabout_right_outlined,
-                                        color: FlutterFlowTheme.of(context)
-                                            .secondary,
-                                        size: 20.0,
+                                      child: Padding(
+                                        padding: EdgeInsets.all(2.0),
+                                        child: Icon(
+                                          Icons.roundabout_right_outlined,
+                                          color: FlutterFlowTheme.of(context)
+                                              .secondary,
+                                          size: 20.0,
+                                        ),
                                       ),
                                     ),
                                   ),
-                                ),
-                                Flexible(
-                                  child: Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        16.0, 0.0, 0.0, 0.0),
-                                    child: Column(
-                                      mainAxisSize: MainAxisSize.max,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  0.0, 0.0, 0.0, 12.0),
-                                          child: RichText(
-                                            textScaler: MediaQuery.of(context)
-                                                .textScaler,
-                                            text: TextSpan(
-                                              children: [
-                                                TextSpan(
-                                                  text: FFLocalizations.of(
-                                                          context)
-                                                      .getText(
-                                                    'a19jraal' /* Randy Rudolph  */,
-                                                  ),
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .bodyLarge
-                                                      .override(
-                                                        fontFamily:
-                                                            'Plus Jakarta Sans',
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .secondary,
-                                                        letterSpacing: 0.0,
-                                                        fontWeight:
-                                                            FontWeight.w600,
-                                                      ),
-                                                ),
-                                                TextSpan(
-                                                  text: FFLocalizations.of(
-                                                          context)
-                                                      .getText(
-                                                    'b3k94yjl' /* sent a SOW Change Order for  */,
-                                                  ),
-                                                  style: TextStyle(),
-                                                ),
-                                                TextSpan(
-                                                  text: FFLocalizations.of(
-                                                          context)
-                                                      .getText(
-                                                    '9vhvqp6g' /* FlutterFlow CRM APP */,
-                                                  ),
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .bodyLarge
-                                                      .override(
-                                                        fontFamily:
-                                                            'Plus Jakarta Sans',
-                                                        letterSpacing: 0.0,
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                      ),
-                                                )
-                                              ],
-                                              style:
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodyLarge
-                                                      .override(
-                                                        fontFamily:
-                                                            'Plus Jakarta Sans',
-                                                        letterSpacing: 0.0,
-                                                      ),
-                                            ),
-                                          ),
-                                        ),
-                                        Container(
-                                          width: double.infinity,
-                                          decoration: BoxDecoration(
-                                            color: FlutterFlowTheme.of(context)
-                                                .primaryBackground,
-                                            borderRadius:
-                                                BorderRadius.circular(12.0),
-                                          ),
-                                          child: Padding(
-                                            padding: EdgeInsets.all(12.0),
-                                            child: Column(
-                                              mainAxisSize: MainAxisSize.max,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Text(
-                                                  FFLocalizations.of(context)
-                                                      .getText(
-                                                    '7djk72um' /* SOW Change Order */,
-                                                  ),
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .labelSmall
-                                                      .override(
-                                                        fontFamily:
-                                                            'Plus Jakarta Sans',
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .secondary,
-                                                        letterSpacing: 0.0,
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                      ),
-                                                ),
-                                                Padding(
-                                                  padding: EdgeInsetsDirectional
-                                                      .fromSTEB(
-                                                          0.0, 4.0, 0.0, 0.0),
-                                                  child: Text(
-                                                    FFLocalizations.of(context)
+                                  Flexible(
+                                    child: Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          16.0, 0.0, 0.0, 0.0),
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.max,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Padding(
+                                            padding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    0.0, 0.0, 0.0, 12.0),
+                                            child: RichText(
+                                              textScaler: MediaQuery.of(context)
+                                                  .textScaler,
+                                              text: TextSpan(
+                                                children: [
+                                                  TextSpan(
+                                                    text: FFLocalizations.of(
+                                                            context)
                                                         .getText(
-                                                      'qysyag2v' /* FlutterFlow CRM App */,
+                                                      'a19jraal' /* Eco Smart:  */,
                                                     ),
                                                     style: FlutterFlowTheme.of(
                                                             context)
@@ -1143,55 +834,146 @@ class _ProjectDetailsAltWidgetState extends State<ProjectDetailsAltWidget>
                                                         .override(
                                                           fontFamily:
                                                               'Plus Jakarta Sans',
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .secondary,
                                                           letterSpacing: 0.0,
+                                                          fontWeight:
+                                                              FontWeight.w600,
                                                         ),
                                                   ),
-                                                ),
-                                                Padding(
-                                                  padding: EdgeInsetsDirectional
-                                                      .fromSTEB(
-                                                          0.0, 8.0, 0.0, 0.0),
-                                                  child: Text(
-                                                    FFLocalizations.of(context)
-                                                        .getText(
-                                                      'ur5udrbc' /* "Please review the updates to ... */,
-                                                    ),
-                                                    style: FlutterFlowTheme.of(
+                                                  TextSpan(
+                                                    text: FFLocalizations.of(
                                                             context)
-                                                        .labelMedium
+                                                        .getText(
+                                                      'b3k94yjl' /* Activity Details */,
+                                                    ),
+                                                    style: TextStyle(),
+                                                  )
+                                                ],
+                                                style:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyLarge
                                                         .override(
                                                           fontFamily:
                                                               'Plus Jakarta Sans',
                                                           letterSpacing: 0.0,
                                                         ),
+                                              ),
+                                            ),
+                                          ),
+                                          Container(
+                                            width: double.infinity,
+                                            decoration: BoxDecoration(
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .primaryBackground,
+                                              borderRadius:
+                                                  BorderRadius.circular(12.0),
+                                            ),
+                                            child: Padding(
+                                              padding: EdgeInsets.all(12.0),
+                                              child: Column(
+                                                mainAxisSize: MainAxisSize.max,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Padding(
+                                                    padding:
+                                                        EdgeInsetsDirectional
+                                                            .fromSTEB(0.0, 4.0,
+                                                                0.0, 0.0),
+                                                    child: Text(
+                                                      'Number of Hours Spent:    ${valueOrDefault<String>(
+                                                        widget!.activityChosen
+                                                            ?.numHours,
+                                                        '0',
+                                                      )}',
+                                                      style: FlutterFlowTheme
+                                                              .of(context)
+                                                          .bodyLarge
+                                                          .override(
+                                                            fontFamily:
+                                                                'Plus Jakarta Sans',
+                                                            letterSpacing: 0.0,
+                                                          ),
+                                                    ),
                                                   ),
-                                                ),
-                                              ],
+                                                  Padding(
+                                                    padding:
+                                                        EdgeInsetsDirectional
+                                                            .fromSTEB(0.0, 10.0,
+                                                                0.0, 0.0),
+                                                    child: Text(
+                                                      'Location of Conduction:    ${valueOrDefault<String>(
+                                                        widget!.activityChosen
+                                                            ?.address
+                                                            ?.hasAddress()
+                                                            ?.toString(),
+                                                        '0',
+                                                      )}',
+                                                      maxLines: 2,
+                                                      style: FlutterFlowTheme
+                                                              .of(context)
+                                                          .bodyLarge
+                                                          .override(
+                                                            fontFamily:
+                                                                'Plus Jakarta Sans',
+                                                            letterSpacing: 0.0,
+                                                          ),
+                                                    ),
+                                                  ),
+                                                  Padding(
+                                                    padding:
+                                                        EdgeInsetsDirectional
+                                                            .fromSTEB(0.0, 10.0,
+                                                                0.0, 0.0),
+                                                    child: Text(
+                                                      'Sustainable Dev Goals Achieved:    ${valueOrDefault<String>(
+                                                        widget!.activityChosen
+                                                            ?.sgdList,
+                                                        '0',
+                                                      )}',
+                                                      maxLines: 2,
+                                                      style: FlutterFlowTheme
+                                                              .of(context)
+                                                          .bodyLarge
+                                                          .override(
+                                                            fontFamily:
+                                                                'Plus Jakarta Sans',
+                                                            letterSpacing: 0.0,
+                                                          ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
                                             ),
                                           ),
-                                        ),
-                                        Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  0.0, 4.0, 0.0, 0.0),
-                                          child: Text(
-                                            FFLocalizations.of(context).getText(
-                                              'm8scfp1r' /* Jul 8, at 2:20pm */,
+                                          Padding(
+                                            padding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    0.0, 4.0, 0.0, 0.0),
+                                            child: Text(
+                                              FFLocalizations.of(context)
+                                                  .getText(
+                                                'm8scfp1r' /* Jul 8, at 2:20pm */,
+                                              ),
+                                              style:
+                                                  FlutterFlowTheme.of(context)
+                                                      .labelMedium
+                                                      .override(
+                                                        fontFamily:
+                                                            'Plus Jakarta Sans',
+                                                        letterSpacing: 0.0,
+                                                      ),
                                             ),
-                                            style: FlutterFlowTheme.of(context)
-                                                .labelMedium
-                                                .override(
-                                                  fontFamily:
-                                                      'Plus Jakarta Sans',
-                                                  letterSpacing: 0.0,
-                                                ),
                                           ),
-                                        ),
-                                      ],
+                                        ],
+                                      ),
                                     ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
                           ),
                         ),
@@ -1250,7 +1032,7 @@ class _ProjectDetailsAltWidgetState extends State<ProjectDetailsAltWidget>
                                         16.0, 0.0, 16.0, 8.0),
                                     child: Text(
                                       FFLocalizations.of(context).getText(
-                                        'i8p8t5uw' /* Updates to Existing App */,
+                                        'i8p8t5uw' /* Uploaded Images */,
                                       ),
                                       style: FlutterFlowTheme.of(context)
                                           .headlineSmall
@@ -1731,7 +1513,6 @@ class _ProjectDetailsAltWidgetState extends State<ProjectDetailsAltWidget>
                         ),
                       ].divide(SizedBox(height: 12.0)),
                     ),
-                    Container(),
                   ],
                 ),
               ),

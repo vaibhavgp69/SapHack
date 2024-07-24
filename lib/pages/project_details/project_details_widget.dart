@@ -1,3 +1,4 @@
+import '/backend/backend.dart';
 import '/components/modal_sections/project_details_alt/project_details_alt_widget.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -11,7 +12,12 @@ import 'project_details_model.dart';
 export 'project_details_model.dart';
 
 class ProjectDetailsWidget extends StatefulWidget {
-  const ProjectDetailsWidget({super.key});
+  const ProjectDetailsWidget({
+    super.key,
+    required this.activityChosenPage,
+  });
+
+  final ActivitiesRecord? activityChosenPage;
 
   @override
   State<ProjectDetailsWidget> createState() => _ProjectDetailsWidgetState();
@@ -76,7 +82,9 @@ class _ProjectDetailsWidgetState extends State<ProjectDetailsWidget> {
           child: wrapWithModel(
             model: _model.projectDetailsAltModel,
             updateCallback: () => setState(() {}),
-            child: ProjectDetailsAltWidget(),
+            child: ProjectDetailsAltWidget(
+              activityChosen: widget!.activityChosenPage!,
+            ),
           ),
         ),
       ),

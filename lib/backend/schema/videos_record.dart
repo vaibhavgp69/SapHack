@@ -16,13 +16,19 @@ class VideosRecord extends FirestoreRecord {
     _initializeFields();
   }
 
-  // "video" field.
-  String? _video;
-  String get video => _video ?? '';
-  bool hasVideo() => _video != null;
+  // "video_link" field.
+  String? _videoLink;
+  String get videoLink => _videoLink ?? '';
+  bool hasVideoLink() => _videoLink != null;
+
+  // "uploadedBy" field.
+  DocumentReference? _uploadedBy;
+  DocumentReference? get uploadedBy => _uploadedBy;
+  bool hasUploadedBy() => _uploadedBy != null;
 
   void _initializeFields() {
-    _video = snapshotData['video'] as String?;
+    _videoLink = snapshotData['video_link'] as String?;
+    _uploadedBy = snapshotData['uploadedBy'] as DocumentReference?;
   }
 
   static CollectionReference get collection =>
@@ -59,11 +65,13 @@ class VideosRecord extends FirestoreRecord {
 }
 
 Map<String, dynamic> createVideosRecordData({
-  String? video,
+  String? videoLink,
+  DocumentReference? uploadedBy,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
-      'video': video,
+      'video_link': videoLink,
+      'uploadedBy': uploadedBy,
     }.withoutNulls,
   );
 
@@ -75,11 +83,12 @@ class VideosRecordDocumentEquality implements Equality<VideosRecord> {
 
   @override
   bool equals(VideosRecord? e1, VideosRecord? e2) {
-    return e1?.video == e2?.video;
+    return e1?.videoLink == e2?.videoLink && e1?.uploadedBy == e2?.uploadedBy;
   }
 
   @override
-  int hash(VideosRecord? e) => const ListEquality().hash([e?.video]);
+  int hash(VideosRecord? e) =>
+      const ListEquality().hash([e?.videoLink, e?.uploadedBy]);
 
   @override
   bool isValidKey(Object? o) => o is VideosRecord;

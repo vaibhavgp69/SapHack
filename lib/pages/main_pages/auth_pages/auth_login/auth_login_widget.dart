@@ -378,10 +378,13 @@ class _AuthLoginWidgetState extends State<AuthLoginWidget>
                                 mainAxisSize: MainAxisSize.max,
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
-                                  wrapWithModel(
-                                    model: _model.mainLogoSmallModel,
-                                    updateCallback: () => setState(() {}),
-                                    child: MainLogoSmallWidget(),
+                                  Align(
+                                    alignment: AlignmentDirectional(0.0, 0.0),
+                                    child: wrapWithModel(
+                                      model: _model.mainLogoSmallModel,
+                                      updateCallback: () => setState(() {}),
+                                      child: MainLogoSmallWidget(),
+                                    ),
                                   ),
                                 ],
                               ).animateOnPageLoad(
